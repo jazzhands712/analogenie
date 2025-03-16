@@ -15,6 +15,14 @@ const SYSTEM_PROMPTS = {
 // Claude model to use
 const CLAUDE_MODEL = 'claude-3-7-sonnet-20250219';
 
+// Define response types
+export interface PromptResponse {
+  type: string;
+  content: string;
+  options: any[];
+  rawResponse?: string;
+}
+
 /**
  * Process a prompt through the Claude API
  * @param stage - Current workflow stage (1-3)
@@ -26,7 +34,7 @@ export async function processPrompt(stage: number, params: {
   domain?: string;
   finding?: string;
   sessionId: string;
-}) {
+}): Promise<PromptResponse> {
   const { concept, domain, finding } = params;
   
   // Get the appropriate system prompt for this stage
@@ -101,7 +109,7 @@ export async function processPrompt(stage: number, params: {
  * @param content - Text response from Claude
  * @returns Structured data for the UI
  */
-function parseResponse(stage: number, content: string) {
+function parseResponse(stage: number, content: string): PromptResponse {
   switch(stage) {
     case 1:
       // Parse domain options
@@ -113,7 +121,7 @@ function parseResponse(stage: number, content: string) {
       // Parse research questions
       return parseResearchResponse(content);
     default:
-      return { type: 'raw', content };
+      return { type: 'raw', content, options: [] };
   }
 }
 
@@ -122,12 +130,12 @@ function parseResponse(stage: number, content: string) {
  * @param content - Text response from Claude
  * @returns Structured domain options
  */
-function parseDomainResponse(content: string) {
+function parseDomainResponse(content: string): PromptResponse {
   // Extract the top domains section
   const domainsSection = content.match(/# Top Domains for Analyzing.*?(?=Which domain should we explore further\?|$)/s);
   
   if (!domainsSection) {
-    throw new Error('Could not find domains section in response');
+    return { type: 'domain_selection', content, options: [] };
   }
   
   // Extract domains using regex
@@ -154,12 +162,12 @@ function parseDomainResponse(content: string) {
  * @param content - Text response from Claude
  * @returns Structured framework options
  */
-function parseFrameworkResponse(content: string) {
+function parseFrameworkResponse(content: string): PromptResponse {
   // Extract the "Brightest Bulbs" section
   const brightest = content.match(/# 6: Brightest Bulbs(.*?)(?=Which path should we explore further\?|$)/s);
   
   if (!brightest) {
-    throw new Error('Could not find "Brightest Bulbs" section in response');
+    return { type: 'framework_selection', content, options: [] };
   }
   
   // Extract frameworks using regex
@@ -187,12 +195,12 @@ function parseFrameworkResponse(content: string) {
  * @param content - Text response from Claude
  * @returns Structured research questions
  */
-function parseResearchResponse(content: string) {
+function parseResearchResponse(content: string): PromptResponse {
   // Extract the research questions section
   const questionsSection = content.match(/<research_questions>(.*?)<\/research_questions>/s);
   
   if (!questionsSection) {
-    throw new Error('Could not find research questions section in response');
+    return { type: 'research_questions', content, options: [] };
   }
   
   // Extract questions using regex
