@@ -4,6 +4,14 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { processPrompt, sendToResearchApi } from '@/lib/api-service';
 
+// Define a type for API responses
+type ApiResponse = {
+  content: string;
+  type?: string;
+  options?: any[];
+  rawResponse?: string;
+};
+
 // Message types
 export type MessageType = 'user' | 'assistant' | 'loading';
 
@@ -81,16 +89,16 @@ export function useChat() {
         content: 'Analyzing concept and identifying domains...',
       });
 
-      // Call API
+      // Call API with explicit type assertion
       const response = await processPrompt(1, {
         concept,
         sessionId,
-      });
+      }) as ApiResponse;
 
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with domain options - with explicit type handling
+      // Add assistant message with domain options
       const assistantMessage: Message = {
         type: 'assistant',
         content: response.content,
@@ -135,17 +143,17 @@ export function useChat() {
         content: 'Generating metaphorical frameworks...',
       });
 
-      // Call API
+      // Call API with explicit type assertion
       const response = await processPrompt(2, {
         concept: currentConcept,
         domain,
         sessionId,
-      });
+      }) as ApiResponse;
 
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with framework options - with explicit type handling
+      // Add assistant message with framework options
       const assistantMessage: Message = {
         type: 'assistant',
         content: response.content,
@@ -190,18 +198,18 @@ export function useChat() {
         content: 'Generating hypotheses and research questions...',
       });
 
-      // Call API
+      // Call API with explicit type assertion
       const response = await processPrompt(3, {
         concept: currentConcept,
         domain: currentDomain,
         finding,
         sessionId,
-      });
+      }) as ApiResponse;
 
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with research questions - with explicit type handling
+      // Add assistant message with research questions
       const assistantMessage: Message = {
         type: 'assistant',
         content: response.content,
