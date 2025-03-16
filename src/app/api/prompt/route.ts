@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { processPrompt } from '@/lib/api-service';
+import { processPrompt, PromptResponse } from '@/lib/api-service';
 import { validateConcept } from '@/lib/error-handling';
 
 export async function POST(request: NextRequest) {
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Process the prompt
-    const result = await processPrompt(stage, {
+    const result: PromptResponse = await processPrompt(stage, {
       concept,
       domain,
       finding,
