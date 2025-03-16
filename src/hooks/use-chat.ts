@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { processPrompt, sendToResearchApi, PromptResponse } from '@/lib/api-service';
+import { processPrompt, sendToResearchApi } from '@/lib/api-service';
 
 // Message types
 export type MessageType = 'user' | 'assistant' | 'loading';
@@ -90,12 +90,20 @@ export function useChat() {
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with domain options
-      addMessage({
+      // Add assistant message with domain options - with explicit type handling
+      const assistantMessage: Message = {
         type: 'assistant',
         content: response.content,
-        options: response.options,
-      });
+      };
+      
+      // Explicitly check and add options if they exist
+      if ('options' in response && Array.isArray(response.options)) {
+        assistantMessage.options = response.options;
+      } else {
+        assistantMessage.options = [];
+      }
+      
+      addMessage(assistantMessage);
 
       return response;
     } catch (err: any) {
@@ -137,12 +145,20 @@ export function useChat() {
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with framework options
-      addMessage({
+      // Add assistant message with framework options - with explicit type handling
+      const assistantMessage: Message = {
         type: 'assistant',
         content: response.content,
-        options: response.options,
-      });
+      };
+      
+      // Explicitly check and add options if they exist
+      if ('options' in response && Array.isArray(response.options)) {
+        assistantMessage.options = response.options;
+      } else {
+        assistantMessage.options = [];
+      }
+      
+      addMessage(assistantMessage);
 
       return response;
     } catch (err: any) {
@@ -185,12 +201,20 @@ export function useChat() {
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with research questions
-      addMessage({
+      // Add assistant message with research questions - with explicit type handling
+      const assistantMessage: Message = {
         type: 'assistant',
         content: response.content,
-        options: response.options,
-      });
+      };
+      
+      // Explicitly check and add options if they exist
+      if ('options' in response && Array.isArray(response.options)) {
+        assistantMessage.options = response.options;
+      } else {
+        assistantMessage.options = [];
+      }
+      
+      addMessage(assistantMessage);
 
       return response;
     } catch (err: any) {
