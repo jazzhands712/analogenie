@@ -2,7 +2,8 @@
 
 import React, { useRef, useEffect } from 'react';
 import { useChat, Message as MessageType } from '@/hooks/use-chat';
-import { LoadingIndicator, ErrorMessage } from '@/components/ui/ui-components';
+import { LoadingIndicator } from '@/components/ui/ui-components';
+import { ErrorMessage } from '@/components/ui/toast';
 import { Button } from '@/components/ui/ui-components';
 
 // Chat Window Component
