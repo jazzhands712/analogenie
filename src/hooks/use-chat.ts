@@ -94,7 +94,7 @@ export function useChat() {
       addMessage({
         type: 'assistant',
         content: response.content,
-        options: response.options,
+        options: response.options || [],
       });
 
       return response;
@@ -141,7 +141,7 @@ export function useChat() {
       addMessage({
         type: 'assistant',
         content: response.content,
-        options: response.options,
+        options: response.options || [],
       });
 
       return response;
@@ -189,7 +189,7 @@ export function useChat() {
       addMessage({
         type: 'assistant',
         content: response.content,
-        options: response.options,
+        options: response.options || [],
       });
 
       return response;
