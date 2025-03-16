@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { processPrompt, sendToResearchApi } from '@/lib/api-service';
+import { processPrompt, sendToResearchApi, PromptResponse } from '@/lib/api-service';
 
 // Message types
 export type MessageType = 'user' | 'assistant' | 'loading';
@@ -94,7 +94,7 @@ export function useChat() {
       addMessage({
         type: 'assistant',
         content: response.content,
-        options: response.options || [],
+        options: response.options,
       });
 
       return response;
@@ -141,7 +141,7 @@ export function useChat() {
       addMessage({
         type: 'assistant',
         content: response.content,
-        options: response.options || [],
+        options: response.options,
       });
 
       return response;
@@ -189,7 +189,7 @@ export function useChat() {
       addMessage({
         type: 'assistant',
         content: response.content,
-        options: response.options || [],
+        options: response.options,
       });
 
       return response;
