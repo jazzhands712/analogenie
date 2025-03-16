@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 13, 12, 34;
+  --background-end-rgb: 8, 8, 20;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Animation delays for loading indicators */
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4338ca;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5b46ff;
+}
+
+/* Markdown styling */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #a5b4fc;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose h1 {
+  font-size: 1.5em;
+}
+
+.prose h2 {
+  font-size: 1.3em;
+}
+
+.prose h3 {
+  font-size: 1.1em;
+}
+
+.prose p {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.prose ul, .prose ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.prose code {
+  background-color: rgba(99, 102, 241, 0.2);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  background-color: #1e1e3f;
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.prose blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  color: #a5b4fc;
+}
+
+.prose a {
+  color: #818cf8;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #a5b4fc;
+}
+
+/* Stage indicators */
+.stage-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.stage-step {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-color: #1e1e3f;
+  color: #a5b4fc;
+  margin-right: 0.5rem;
+}
+
+.stage-step.active {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.stage-step.completed {
+  background-color: #10b981;
+  color: white;
+}
+
+.stage-line {
+  flex: 1;
+  height: 2px;
+  background-color: #1e1e3f;
+  margin: 0 0.5rem;
+}
+
+.stage-line.active {
+  background-color: #4f46e5;
+}
+
+.stage-line.completed {
+  background-color: #10b981;
+}
