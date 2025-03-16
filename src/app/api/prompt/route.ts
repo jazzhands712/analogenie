@@ -1,34 +1,30 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import { processPrompt } from '@/lib/api-service';
 import { validateConcept } from '@/lib/error-handling';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    const { stage, concept, domain, finding, sessionId } = req.body;
+    const body = await request.json();
+    const { stage, concept, domain, finding, sessionId } = body;
     
     // Validate required parameters
     if (!stage || !concept) {
-      return res.status(400).json({ error: 'Missing required parameters' });
+      return NextResponse.json({ error: 'Missing required parameters' }, { status: 400 });
     }
     
     // Validate concept length
     const validation = validateConcept(concept);
     if (!validation.valid) {
-      return res.status(400).json({ error: validation.message });
+      return NextResponse.json({ error: validation.message }, { status: 400 });
     }
     
     // Validate stage-specific parameters
     if (stage >= 2 && !domain) {
-      return res.status(400).json({ error: 'Domain is required for stage 2 and above' });
+      return NextResponse.json({ error: 'Domain is required for stage 2 and above' }, { status: 400 });
     }
     
     if (stage >= 3 && !finding) {
-      return res.status(400).json({ error: 'Finding is required for stage 3' });
+      return NextResponse.json({ error: 'Finding is required for stage 3' }, { status: 400 });
     }
     
     // Process the prompt
@@ -39,12 +35,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       sessionId
     });
     
-    res.status(200).json(result);
+    return NextResponse.json(result);
   } catch (error: any) {
     console.error('Error processing prompt:', error);
-    res.status(500).json({ 
+    return NextResponse.json({ 
       error: 'Failed to process prompt',
       message: error.message 
-    });
+    }, { status: 500 });
   }
 }
