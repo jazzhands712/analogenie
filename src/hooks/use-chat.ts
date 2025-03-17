@@ -98,20 +98,12 @@ export function useChat() {
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with domain options
-      const assistantMessage: Omit<Message, 'id'> = {
+      // Add assistant message with domain options - directly call addMessage
+      addMessage({
         type: 'assistant',
         content: response.content,
-      };
-      
-      // Explicitly check and add options if they exist
-      if ('options' in response && Array.isArray(response.options)) {
-        assistantMessage.options = response.options;
-      } else {
-        assistantMessage.options = [];
-      }
-      
-      addMessage(assistantMessage);
+        options: Array.isArray(response.options) ? response.options : [],
+      });
 
       return response;
     } catch (err: any) {
@@ -153,20 +145,12 @@ export function useChat() {
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with framework options
-      const assistantMessage: Omit<Message, 'id'> = {
+      // Add assistant message with framework options - directly call addMessage
+      addMessage({
         type: 'assistant',
         content: response.content,
-      };
-      
-      // Explicitly check and add options if they exist
-      if ('options' in response && Array.isArray(response.options)) {
-        assistantMessage.options = response.options;
-      } else {
-        assistantMessage.options = [];
-      }
-      
-      addMessage(assistantMessage);
+        options: Array.isArray(response.options) ? response.options : [],
+      });
 
       return response;
     } catch (err: any) {
@@ -209,20 +193,12 @@ export function useChat() {
       // Remove loading message
       removeMessage(loadingId);
 
-      // Add assistant message with research questions
-      const assistantMessage: Omit<Message, 'id'> = {
+      // Add assistant message with research questions - directly call addMessage
+      addMessage({
         type: 'assistant',
         content: response.content,
-      };
-      
-      // Explicitly check and add options if they exist
-      if ('options' in response && Array.isArray(response.options)) {
-        assistantMessage.options = response.options;
-      } else {
-        assistantMessage.options = [];
-      }
-      
-      addMessage(assistantMessage);
+        options: Array.isArray(response.options) ? response.options : [],
+      });
 
       return response;
     } catch (err: any) {
