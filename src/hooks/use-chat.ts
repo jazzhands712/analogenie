@@ -99,7 +99,7 @@ export function useChat() {
       removeMessage(loadingId);
 
       // Add assistant message with domain options
-      const assistantMessage: Message = {
+      const assistantMessage: Omit<Message, 'id'> = {
         type: 'assistant',
         content: response.content,
       };
@@ -154,7 +154,7 @@ export function useChat() {
       removeMessage(loadingId);
 
       // Add assistant message with framework options
-      const assistantMessage: Message = {
+      const assistantMessage: Omit<Message, 'id'> = {
         type: 'assistant',
         content: response.content,
       };
@@ -210,7 +210,7 @@ export function useChat() {
       removeMessage(loadingId);
 
       // Add assistant message with research questions
-      const assistantMessage: Message = {
+      const assistantMessage: Omit<Message, 'id'> = {
         type: 'assistant',
         content: response.content,
       };
